@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>S&V Veículos — Carros e motos em Pirapora e Várzea da Palma</title><meta name="description" content="Carros novos, seminovos e motos em Pirapora e Várzea da Palma. S&V Veículos."><link rel="stylesheet" href="css/style.css"></head><body>
+<header id="topo"></header>
+<section class="hero"><div class="container"><h1>O carro certo, com a confiança S&amp;V</h1><p>Novos, seminovos e motos em Pirapora e Várzea da Palma.</p>
+<form class="busca" action="veiculos.html"><input name="q" placeholder="Marca, modelo ou cidade"><button class="btn">Pesquisar</button></form></div></section>
+<main class="container"><h2>Categorias</h2><div class="cats" id="cats"></div>
+<h2>Veículos em destaque</h2><div class="grade" id="destaques"></div>
+<h2>Últimos anúncios</h2><div class="grade" id="ultimos"></div>
+<h2>Motos</h2><div class="grade" id="motos"></div>
+<h2>Onde estamos</h2><div class="mapas" id="mapas"></div></main><footer id="rodape"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><script src="js/config.js"></script><script src="js/dados.js"></script><script src="js/armazenamento.js"></script><script src="js/app.js"></script>
+<script>document.addEventListener("DOMContentLoaded",async()=>{const l=(await Armazenamento.veiculos()).filter(v=>v.status==="ativo");
+document.getElementById("cats").innerHTML=CATEGORIAS.map(c=>`<a href="veiculos.html?categoria=${encodeURIComponent(c)}">${c}</a>`).join("");
+mostrarMapas("mapas");listarCards(l.filter(v=>v.destaque).slice(0,4),"destaques");listarCards(l.filter(v=>v.categoria!=="Moto").sort((a,b)=>b.id-a.id).slice(0,8),"ultimos");listarCards(l.filter(v=>v.categoria==="Moto").slice(0,4),"motos");});</script></body></html>

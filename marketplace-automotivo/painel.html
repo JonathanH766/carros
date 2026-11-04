@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel — S&V Veículos</title><link rel="stylesheet" href="css/style.css"></head><body>
+<header id="topo"></header>
+<main class="container">
+
+  <!-- BLOCO 1: tela de senha. Some depois do login (ver painel.js) -->
+  <section id="telaLogin" class="filtros" style="max-width:360px;margin:40px auto">
+    <h2 style="grid-column:1/-1">Entrar no painel</h2>
+    <input id="email" type="email" placeholder="E-mail (só no modo nuvem)" style="grid-column:1/-1">
+    <input id="senha" type="password" placeholder="Senha" style="grid-column:1/-1">
+    <button class="btn" onclick="entrar()" style="grid-column:1/-1">Entrar</button>
+  </section>
+
+  <!-- BLOCO 2: painel (começa escondido) -->
+  <section id="telaPainel" hidden>
+    <div class="topolista"><h2 id="tituloForm">Adicionar veículo</h2><button class="btn ghost" onclick="sair()">Sair da conta</button></div>
+
+    <!-- Formulário: cada campo tem um id usado no painel.js -->
+    <form id="formVeiculo" class="filtros">
+      <input id="f_marca" placeholder="Marca (ex.: Toyota)" required>
+      <input id="f_modelo" placeholder="Modelo (ex.: Corolla XEi)" required>
+      <select id="f_categoria" required></select>
+      <input id="f_ano" type="number" placeholder="Ano" required>
+      <input id="f_km" type="number" placeholder="Quilometragem" required>
+      <input id="f_preco" type="number" placeholder="Preço (R$)" required>
+      <select id="f_cambio"><option>Manual</option><option>Automático</option><option>CVT</option><option>Automatizado</option></select>
+      <select id="f_combustivel"><option>Flex</option><option>Gasolina</option><option>Etanol</option><option>Diesel</option><option>Elétrico</option><option>Híbrido</option></select>
+      <select id="f_cor"></select>
+      <input id="f_cidade" placeholder="Cidade" required>
+      <input id="f_whatsapp" placeholder="WhatsApp (55DDDNÚMERO)" required>
+      <input id="f_cc" type="number" placeholder="Cilindrada em cc (só motos)"><input id="f_tipo" placeholder="Tipo da moto (Trail, Naked...)">
+      <textarea id="f_descricao" placeholder="Descrição" style="grid-column:1/-1;padding:10px"></textarea>
+      <input id="f_fotos" type="file" accept="image/*" multiple style="grid-column:1/-1">
+      <div id="previa" style="grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap"></div>
+      <button class="btn" type="submit">Salvar veículo</button>
+      <button class="btn ghost" type="button" onclick="limparForm()" style="border:1px solid #ccc">Cancelar</button>
+    </form>
+
+    <h2>Meus veículos</h2>
+    <div id="listaDono" class="grade"></div>
+  </section>
+</main>
+<footer id="rodape"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><script src="js/config.js"></script><script src="js/dados.js"></script><script src="js/armazenamento.js"></script><script src="js/app.js"></script><script src="js/painel.js"></script>
+</body></html>

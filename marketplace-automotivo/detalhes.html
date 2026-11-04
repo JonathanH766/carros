@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Detalhes — S&V Veículos</title><link rel="stylesheet" href="css/style.css"></head><body>
+<header id="topo"></header><div id="galeria"></div><main class="container" id="detalhe"></main>
+<main class="container"><h2>Você também pode gostar</h2><div class="grade" id="semelhantes"></div></main><footer id="rodape"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><script src="js/config.js"></script><script src="js/dados.js"></script><script src="js/armazenamento.js"></script><script src="js/app.js"></script>
+<script>document.addEventListener("DOMContentLoaded",async()=>{
+const v=await Armazenamento.veiculo(new URLSearchParams(location.search).get("id"));
+if(!v){document.getElementById("detalhe").innerHTML="<p style='margin:40px 0'>Veículo não encontrado. <a href='veiculos.html'><u>Ver todos</u></a></p>";return;}
+document.title=v.marca+" "+v.modelo+" — S&V Veículos";
+// Galeria que desliza (arraste no celular / setas no computador)
+let fotos="";for(let i=0;i<totalFotos(v);i++)fotos+=imgVeiculo(v,i,'alt="Foto '+(i+1)+'"');
+document.getElementById("galeria").innerHTML='<div class="galeria"><button class="seta e" onclick="rolar(-1)">‹</button><div class="slides" id="slides">'+fotos+'</div><button class="seta d" onclick="rolar(1)">›</button></div>';
+const zap="https://wa.me/"+v.whatsapp+"?text=";
+document.getElementById("detalhe").innerHTML=`<div class="det"><div>
+<div class="box"><h1>${v.marca} <span>${v.modelo}</span></h1>
+<div class="info"><div><small>Cidade</small><b>${v.cidade}</b></div><div><small>Ano</small><b>${v.ano}</b></div><div><small>KM</small><b>${v.km.toLocaleString("pt-BR")}</b></div><div><small>Câmbio</small><b>${v.cambio}</b></div>
+<div><small>${v.cc?"Tipo":"Carroceria"}</small><b>${v.tipo||v.categoria}</b></div>${v.cc?`<div><small>Cilindrada</small><b>${v.cc} cc</b></div>`:""}<div><small>Combustível</small><b>${v.combustivel}</b></div><div><small>Cor</small><b>${v.cor}</b></div><div><small>Vendedor</small><b>${v.vendedor||"S&V Veículos"}</b></div></div></div>
+<div class="box"><h3>Descrição</h3><p class="mini" style="margin-top:10px">${v.descricao||"Entre em contato para mais informações sobre este veículo."}</p></div></div>
+<aside class="box" style="align-self:start"><p class="preco">${moeda(v.preco)}</p><p class="mini">Envie uma mensagem ao vendedor</p>
+<div class="form"><input id="nome" placeholder="Nome*"><input id="tel" placeholder="Telefone*"><textarea id="msg" rows="3">Olá, tenho interesse no ${v.marca} ${v.modelo}. Por favor entre em contato.</textarea>
+<button class="btn" onclick="enviar('${zap}')">Enviar pelo WhatsApp</button></div></aside></div>`;
+const todos=await Armazenamento.veiculos();
+listarCards(todos.filter(x=>x.id!==v.id&&x.status==="ativo"&&(x.categoria===v.categoria||x.marca===v.marca)).slice(0,4),"semelhantes");});
+function rolar(d){const s=document.getElementById("slides");s.scrollBy({left:d*s.clientWidth*0.7,behavior:"smooth"});}
+function enviar(base){const n=document.getElementById("nome").value.trim(),t=document.getElementById("tel").value.trim();
+if(!n||!t){alert("Preencha nome e telefone.");return;}
+window.open(base+encodeURIComponent(document.getElementById("msg").value+"\n\nNome: "+n+"\nTelefone: "+t),"_blank");}</script></body></html>

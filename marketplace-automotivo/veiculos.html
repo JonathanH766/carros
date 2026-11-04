@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comprar veículos — S&V Veículos</title><link rel="stylesheet" href="css/style.css"></head><body>
+<header id="topo"></header>
+<main class="container layout">
+<!-- Barra lateral de filtros (no celular abre pelo botão Filtros) -->
+<aside class="lateral" id="lateral"><form id="formFiltros">
+ <label>Busca</label><input id="q" placeholder="Marca, modelo, cidade">
+ <label>Marca</label><select id="marca"></select><label>Modelo</label><select id="modelo"></select><label>Categoria</label><select id="categoria"></select>
+ <label>Ano</label><div class="dupla"><input id="anoMin" type="number" placeholder="Mín."><input id="anoMax" type="number" placeholder="Máx."></div>
+ <label>Preço (R$)</label><div class="dupla"><input id="precoMin" type="number" placeholder="Mín."><input id="precoMax" type="number" placeholder="Máx."></div>
+ <label>Km máximo</label><input id="kmMax" type="number" placeholder="Ex.: 80000">
+ <label>Cor</label><select id="cor"></select><label>Câmbio</label><select id="cambio"></select><label>Combustível</label><select id="combustivel"></select>
+ <div class="acoes" style="margin-top:16px"><button class="btn" type="submit">Pesquisar</button><button class="btn ghost" type="button" id="limpar">Limpar</button></div>
+ <select id="ordem" hidden></select></form></aside>
+<section><h2 id="titulo" style="margin-top:0">Carros à venda</h2><div class="topolista"><strong id="contador"></strong><span><button class="btn ghost" id="btnFiltros" onclick="document.getElementById('lateral').classList.toggle('aberto')">Filtros</button>
+ <select id="ordemTopo" onchange="document.getElementById('ordem').innerHTML='<option value='+this.value+'></option>';aplicarFiltros()"><option value="">Mais relevantes</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option><option value="ano">Ano (mais novo)</option><option value="km">Menor km</option></select></span></div>
+<div class="chips" id="chips"></div><div class="grade" id="lista"></div></section></main><footer id="rodape"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><script src="js/config.js"></script><script src="js/dados.js"></script><script src="js/armazenamento.js"></script><script src="js/app.js"></script><script src="js/filtros.js"></script></body></html>
